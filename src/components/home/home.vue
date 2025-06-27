@@ -42,4 +42,5 @@ const count = ref(0)
 .bedroom2 {
     background-color: green;
 }
+
 </style>

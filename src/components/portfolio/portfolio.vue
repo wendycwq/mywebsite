@@ -56,7 +56,7 @@ function readJSON() {
                             <n-gi :span="12">
                                 <n-flex vertcial :size="24">
                                     <div>
-                                        <n-avatar v-if="currentTab == 0" src="/wendy/portfolio/MUN-Logo.png"
+                                        <n-avatar v-if="currentTab == 0" src="/wendy/portfolio/MUN/MUN-Logo.png"
                                             style="float: left; background-color: #fff; margin-right: 1.4rem" :size="96"
                                             round></n-avatar>
                                         <div class="description">

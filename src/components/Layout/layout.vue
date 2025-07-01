@@ -6,11 +6,13 @@ import {
 } from 'naive-ui';
 import { gsap } from 'gsap';
 import {
+    ScrollToPlugin,
     ScrollSmoother,
     ScrollTrigger
 } from 'gsap/all';
 import HomeVue from '../home/home.vue';
 import AboutVue from '../about/about.vue';
+import PortfolioVue from '../portfolio/portfolio.vue';
 
 const themeOverrides = {
     common: {
@@ -24,7 +26,7 @@ const themeOverrides = {
 onMounted(() => {
     const smoother = ref(null);
 
-    gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+    gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin);
 
     smoother.value = ScrollSmoother.create({
         smooth: 2,
@@ -44,19 +46,22 @@ onMounted(() => {
                 <div class="nav">
                     <div style="display: flex;">
                         <n-flex class="nav-list" :size="48" justify="end" :wrap="false">
-                            <div>Contact</div>
-                            <div>Work</div>
-                            <div>Skills</div>
-                            <div>About</div>
-                            <div>Home</div>
+                            <n-button text tag="a" href="#contact">Contact</n-button>
+                            <n-button text tag="a" href="#experience">Experience</n-button>
+                            <n-button text tag="a" href="#work">Work</n-button>
+                            <n-button text tag="a" href="#about">About</n-button>
+                            <n-button text tag="a" href="#home">Home</n-button>
                         </n-flex>
                     </div>
                 </div>
             </n-layout-sider>
             <n-layout id="smooth-content" style="position: relative;">
                 <n-layout-content class="content">
-                    <home-vue></home-vue>
-                    <about-vue></about-vue>
+                    <home-vue id="home"></home-vue>
+                    <section id="about">
+                        <about-vue></about-vue>
+                    </section>
+                    <portfolio-vue id="portfolio"></portfolio-vue>
                 </n-layout-content>
             </n-layout>
         </n-layout>

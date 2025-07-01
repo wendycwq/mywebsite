@@ -1,6 +1,23 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap';
+import {
+    ScrollSmoother,
+    ScrollTrigger,
+    SplitText
+} from 'gsap/all';
 
+onMounted(() => {
+    document.fonts.ready.then(() => {
+        gsap.registerPlugin(SplitText);
+        const split = SplitText.create(".hello", { type: "chars" });
+        gsap.from(split.chars, {
+            y: 20,
+            autoAlpha: 0,
+            stagger: 0.05
+        });
+    })
+})
 </script>
 
 <template>
@@ -147,7 +164,7 @@ import { ref } from 'vue'
 
         img {
             position: absolute;
-            width: 80%;
+            width: 75%;
             bottom: 0;
             right: 0;
         }

@@ -119,15 +119,11 @@
                 "imgOrientation": "horizontal"
             }
         ],
-        "urls": [
-            "",
-            "",
-            ""
-        ]
+        "urls": []
     },
     {
         "label": "NAE-UNICEF Summit",
-        "bannerUrl": "/wendy/portfolio/NAE-UNICEF/banner_UNICEF.JPG",
+        "bannerUrl": "/wendy/portfolio/NAE-UNICEF/banner.jpg",
         "description": "During this Summit, over 100 NAE students presented projects that our schools have taken to advance the United Nation’s Sustainable Development Goals (SDGs) in our communities this year. We cultivated our social purpose, tackled major issues using creative solutions, developed our leadership and advocacy skills, and connected with NAE students from across the globe. We participated in workshops led by UNICEF and World's Largest Lesson.",
         "achievement": "I represented BSB Shunyi as the student ambassador at this Summit. At the end of the Summit, there was a conference to share our solutions to an issue concerning one of the SDGs. Our group aimed to tackle SDG 10 Reduced Inequalities, particularly on education for the disabled population.",
         "date": "",
@@ -140,9 +136,9 @@
     },
     {
         "label": "Seeway Tanzania",
-        "bannerUrl": "",
-        "description": "Seeway Tanzania is a non-governmental organisation which is committed to providing community development projects in Tanzania. In this project, we not only fundraised for Seeway Tanzania, but also travelled to Tanzania in February 2024. Our team raised over $7000 for the organisation through charity sales, sporting events, and the school cafe since June 2023. During the trip, we assisted in the construction of the Dolly Bush Primary School, built goatsheds and donated a goat each to two families, and interacted with the local people.",
-        "achievement": "",
+        "bannerUrl": "/wendy/portfolio/Tanzania/banner.jpg",
+        "description": "Seeway Tanzania is a non-governmental organisation which is committed to providing community development projects in Tanzania. In this project, we not only fundraised for Seeway Tanzania, but also travelled to Tanzania in February 2024.",
+        "achievement": "Our team raised over $7000 for the organisation through charity sales, sporting events, and the school cafe since June 2023. During the trip, we assisted in the construction of the Dolly Bush Primary School, built goatsheds and donated a goat each to two families, and interacted with the local people.",
         "date": "April 2023 - April 2024",
         "content": "",
         "urls": [
@@ -153,9 +149,9 @@
     },
     {
         "label": "Project Crescendo",
-        "bannerUrl": "",
-        "description": "",
-        "achievement": "",
+        "bannerUrl": "/wendy/portfolio/Crescendo/banner.jpg",
+        "description": "Morbi scelerisque ut felis at feugiat. Aliquam eget est vehicula, molestie dui fermentum, lacinia elit. Quisque euismod lectus felis, id sollicitudin urna congue vel. Sed tempus euismod tortor. Ut dui odio, varius faucibus vehicula ultrices, auctor finibus nunc. Nulla blandit sit amet arcu eget condimentum. Morbi sed pulvinar erat. Maecenas accumsan sem non tellus tincidunt, a malesuada leo consectetur. Vestibulum at lacus vitae neque fringilla facilisis eu et enim. Cras ut scelerisque nisi, et vehicula diam. Maecenas ut mauris malesuada, interdum felis vel, euismod felis. Quisque lobortis justo et interdum dignissim. Nunc venenatis sollicitudin dui in porta.",
+        "achievement": "Nunc at lacus ac urna suscipit interdum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque accumsan ex odio, ac condimentum odio volutpat nec. Integer dictum, nisi ut rhoncus bibendum, turpis nisl molestie neque, nec condimentum ante ligula et ante. Etiam ac tristique tellus, ut luctus ante. Aliquam rhoncus orci eu lacinia viverra. In semper tortor nisi. Pellentesque in lobortis est. Etiam vitae ipsum condimentum, hendrerit arcu et, vestibulum ligula.",
         "date": "",
         "content": "",
         "urls": [

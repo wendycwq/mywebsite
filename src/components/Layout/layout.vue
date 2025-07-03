@@ -12,7 +12,13 @@ import {
 } from 'gsap/all';
 import HomeVue from '../home/home.vue';
 import AboutVue from '../about/about.vue';
-import PortfolioVue from '../portfolio/portfolio.vue';
+import ResearchVue from '../research/research.vue'
+import WorkVue from '../work/work.vue';
+import ExperienceVue from '../experience/experience.vue'
+import FamilyVue from '../family/family.vue'
+import ModelUNVue from '../ModelUN/ModelUN.vue';
+
+const smoother = ref(null);
 
 const themeOverrides = {
     common: {
@@ -24,8 +30,6 @@ const themeOverrides = {
 };
 
 onMounted(() => {
-    const smoother = ref(null);
-
     gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin);
 
     smoother.value = ScrollSmoother.create({
@@ -34,34 +38,40 @@ onMounted(() => {
         effects: true,
     })
 })
+
+function handleJump(id) {
+    smoother.value.scrollTo(id, true, "top");
+}
 </script>
 
 <template>
     <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme">
         <n-layout has-sider>
             <n-layout-sider bordered class="sider" :width="'5rem'">
-                <div class="logo">
+                <div class="logo" @click="handleJump('#home')">
                     <n-avatar round style="background-color: #346a60">W</n-avatar>
                 </div>
                 <div class="nav">
                     <div style="display: flex;">
                         <n-flex class="nav-list" :size="48" justify="end" :wrap="false">
-                            <n-button text tag="a" href="#contact">Contact</n-button>
-                            <n-button text tag="a" href="#experience">Experience</n-button>
-                            <n-button text tag="a" href="#work">Work</n-button>
-                            <n-button text tag="a" href="#about">About</n-button>
-                            <n-button text tag="a" href="#home">Home</n-button>
+                            <n-button text @click="handleJump('#family')">Family</n-button>
+                            <n-button text @click="handleJump('#research')">Research</n-button>
+                            <n-button text @click="handleJump('#experience')">Experience</n-button>
+                            <n-button text @click="handleJump('#project')">Project</n-button>
+                            <n-button text @click="handleJump('#about')">About</n-button>
                         </n-flex>
                     </div>
                 </div>
             </n-layout-sider>
             <n-layout id="smooth-content" style="position: relative;">
                 <n-layout-content class="content">
-                    <home-vue id="home"></home-vue>
-                    <section id="about">
-                        <about-vue></about-vue>
-                    </section>
-                    <portfolio-vue id="portfolio"></portfolio-vue>
+                    <home-vue id="home" @get-jump-id="handleJump"></home-vue>
+                    <about-vue id="about" @get-jump-id="handleJump"></about-vue>
+                    <ModelUNVue id="project" @get-jump-id="handleJump"></ModelUNVue>
+                    <work-vue id="work"></work-vue>
+                    <experience-vue id="experience"></experience-vue>
+                    <research-vue id="research"></research-vue>
+                    <family-vue id="family"></family-vue>
                 </n-layout-content>
             </n-layout>
         </n-layout>
@@ -104,6 +114,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 
     .n-avatar {
         font-family: "Cherry Bomb One", system-ui;

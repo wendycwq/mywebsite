@@ -1,4 +1,9 @@
 <script setup>
+const emits = defineEmits(["getJumpId"]);
+
+function handleJump(id) {
+    emits("getJumpId", id)
+}
 </script>
 
 <template>
@@ -79,9 +84,9 @@
                             </n-gi>
                         </n-grid>
                         <div>
-                            <n-button type="primary"
-                                style="font-size: 1.2rem; padding: 1.5rem; color: #fff; font-weight: 600;">
-                                Go to my Portfolio
+                            <n-button type="primary" @click="handleJump('#project')"
+                                style="padding: 1.5rem; color: #fff; font-weight: 600;">
+                                Go to my Projects
                             </n-button>
                         </div>
                     </n-flex>

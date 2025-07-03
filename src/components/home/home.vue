@@ -7,6 +7,8 @@ import {
     SplitText
 } from 'gsap/all';
 
+const emits = defineEmits(["getJumpId"]);
+
 onMounted(() => {
     document.fonts.ready.then(() => {
         gsap.registerPlugin(SplitText);
@@ -18,6 +20,10 @@ onMounted(() => {
         });
     })
 })
+
+function handleJump(id) {
+    emits("getJumpId", id)
+}
 </script>
 
 <template>
@@ -51,17 +57,17 @@ onMounted(() => {
                 </n-flex>
             </n-flex>
             <n-grid :x-gap="24">
-                <n-gi class="left" :span="8">
+                <n-gi class="left" :span="10">
                     <n-flex vertical>
                         <div class="hello">
                             <b>Hi, I'm Wendy</b>
                         </div>
-                        <p>
+                        <p style="font-size: 1.1rem">
                             I am currently working on
                             applications for history, politics, and international relations.
                         </p>
                         <div style="margin-top: 12px">
-                            <n-button type="primary" style="color: #fff; padding: 1.5rem">
+                            <n-button type="primary" style="color: #fff; padding: 1.5rem" @click="handleJump('#about')">
                                 <template #icon>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                         viewBox="0 0 512 512">
@@ -80,7 +86,7 @@ onMounted(() => {
                         </div>
                     </n-flex>
                 </n-gi>
-                <n-gi class="right" :span="16">
+                <n-gi class="right" :span="14">
                     <img src="/wendy/Wendy-Portrait-left.png"></img>
                 </n-gi>
             </n-grid>
@@ -117,7 +123,6 @@ onMounted(() => {
         margin: 0 auto;
         position: relative;
     }
-
 
     .SocialMedia {
         position: absolute;
@@ -164,7 +169,7 @@ onMounted(() => {
 
         img {
             position: absolute;
-            width: 75%;
+            width: 90%;
             bottom: 0;
             right: 0;
         }

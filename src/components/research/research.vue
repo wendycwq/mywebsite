@@ -240,14 +240,14 @@ function onScroll() {
     font-size: 1rem;
 }
 
-.modal-header,
-.essay-date,
-.essay-content {
-    font-family: 'Times New Roman', Times, serif;
-}
+// .modal-header,
+// .essay-date,
+// .essay-content {
+//     font-family: 'Times New Roman', Times, serif;
+// }
 
 .essay-content {
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .carousel {

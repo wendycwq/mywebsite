@@ -18,6 +18,42 @@ onMounted(() => {
             autoAlpha: 0,
             stagger: 0.05
         });
+
+        gsap.set("#intro", { opacity: 1 })
+
+        let mySplitText = SplitText.create("#intro", { type: "chars, words" });
+
+        gsap.from(mySplitText.chars, {
+            duration: 2,
+            opacity: 0,
+            stagger: { from: "random", each: 0.01 }
+        });
+
+        gsap.set(".SocialMedia", { opacity: 0, y: -100 })
+
+        gsap.to(".SocialMedia", {
+            duration: 1,
+            opacity: 1,
+            stagger: { y: 0 },
+            delay: 1
+        });
+
+        gsap.set(".email", { opacity: 0, y: 100 })
+
+        gsap.to(".email", {
+            duration: 1,
+            opacity: 1,
+            stagger: { y: 0 },
+            delay: 1
+        });
+
+        gsap.set("#aboutButton", { opacity: 0 })
+
+        gsap.to("#aboutButton", {
+            duration: 1,
+            opacity: 1,
+            delay: 2
+        });
     })
 })
 
@@ -62,11 +98,11 @@ function handleJump(id) {
                         <div class="hello">
                             <b>Hi, I'm Wendy</b>
                         </div>
-                        <p style="font-size: 1.1rem">
+                        <p id="intro" style="font-size: 1.1rem">
                             I am currently working on
                             applications for history, politics, and international relations.
                         </p>
-                        <div style="margin-top: 12px">
+                        <div id="aboutButton" style="margin-top: 12px">
                             <n-button type="primary" style="color: #fff; padding: 1.5rem" @click="handleJump('#about')">
                                 <template #icon>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

@@ -1,5 +1,33 @@
 <script setup>
+import { gsap } from 'gsap';
+import {
+    SplitText,
+    ScrollToPlugin,
+    ScrollSmoother,
+    ScrollTrigger
+} from 'gsap/all';
+import { onMounted } from 'vue';
+
 const emits = defineEmits(["getJumpId"]);
+
+onMounted(() => {
+    gsap.registerPlugin(SplitText, ScrollSmoother, ScrollTrigger, ScrollToPlugin);
+
+    // gsap.set("#hello", { opacity: 0, y: 100 })
+    // const split = SplitText.create("#hello", { type: "chars" });
+
+    // gsap.from(split.chars, {
+    //     scrollTrigger: {
+    //         trigger: 'about-container',
+    //         start: 'top top',
+    //         end: '+=1000',
+    //         scrub: true
+    //     },
+    //     y: 20,
+    //     autoAlpha: 0,
+    //     stagger: 0.05
+    // });
+})
 
 function handleJump(id) {
     emits("getJumpId", id)
@@ -21,9 +49,10 @@ function handleJump(id) {
                 </n-gi>
                 <n-gi :span=12>
                     <n-flex :size="32" vertical>
-                        <div style="font-size: 1.5rem; font-weight: 600;">Hi, I am Wenqi Chen, based in Beijing, China.
+                        <div id="hello" style="font-size: 1.5rem; font-weight: 600;">Hi, I am Wenqi Chen, based in
+                            Beijing, China.
                         </div>
-                        <div style="font-size: 1.1rem">
+                        <div id="description" style="font-size: 1.1rem">
                             I live in Beijing with my parents, my younger sister Mandy, and four
                             pets—three cats (Nana, TinTin, Mimi) and a dog named Pearl (珍珠). I’ve been doing Model
                             United Nations since
@@ -31,7 +60,7 @@ function handleJump(id) {
                             piano and tennis.
                         </div>
                         <n-grid :x-gap="12">
-                            <n-gi :span="8" class="skill-block">
+                            <n-gi id="skill1" :span="8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="32" color="#428478FF">
@@ -47,7 +76,7 @@ function handleJump(id) {
                                     <div class="time">Since 2014</div>
                                 </n-flex>
                             </n-gi>
-                            <n-gi :span="8" class="skill-block">
+                            <n-gi id="skill2" :span="8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="32" color="#428478FF">
@@ -66,7 +95,7 @@ function handleJump(id) {
                                     <div class="time">Since 2016</div>
                                 </n-flex>
                             </n-gi>
-                            <n-gi :span="8" class="skill-block">
+                            <n-gi id="skill3" :span="8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="28" color="#428478FF">
@@ -83,7 +112,7 @@ function handleJump(id) {
                                 </n-flex>
                             </n-gi>
                         </n-grid>
-                        <div>
+                        <div id="projectButton">
                             <n-button type="primary" @click="handleJump('#project')"
                                 style="padding: 1.5rem; color: #fff; font-weight: 600;">
                                 Go to my Projects

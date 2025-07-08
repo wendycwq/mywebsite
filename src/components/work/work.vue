@@ -22,7 +22,8 @@ function handleChangeTabs(i) {
     currentTab.value = i;
 }
 
-function openDetailModal() {
+function openDetailModal(i) {
+    currentTab.value = i + 1;
     showDetailModal.value = true;
 }
 
@@ -48,7 +49,7 @@ function readJSON() {
                 </div> -->
                 <div class="tabContent">
                     <n-grid :cols="3" :x-gap="48">
-                        <n-gi class="tabCard" v-for="content in allTabsContent.concat().splice(1, 3)">
+                        <n-gi class="tabCard" v-for="(content, index) in allTabsContent.concat().splice(1, 3)">
                             <n-flex vertcial :size="24">
                                 <div class="label">{{ content.label }}</div>
                                 <img :src="content.bannerUrl" />
@@ -62,7 +63,7 @@ function readJSON() {
                                         </template>
                                     </n-ellipsis>
                                 </div>
-                                <n-button type="primary" @click="openDetailModal" icon-placement="right"
+                                <n-button type="primary" @click="openDetailModal(index)" icon-placement="right"
                                     style="color: #fff; font-weight: 600; width: 100%" :size="'large'">
                                     More Details
                                     <template #icon>
@@ -101,6 +102,13 @@ function readJSON() {
                                 <div>{{ content.description }}</div>
                             </n-flex>
                         </div>
+                        <n-flex v-if="allTabsContent[currentTab].urls.length" vertical>
+                            <div><b>References:</b></div>
+                            <div v-for="url in allTabsContent[currentTab].urls">
+                                <n-button tag="a" target="_blank" :href="url" text>{{ url }}</n-button>
+                            </div>
+                        </n-flex>
+                        <div style="height: 3rem;"></div>
                     </n-flex>
                 </div>
             </n-scrollbar>
@@ -148,7 +156,7 @@ function readJSON() {
             padding: 2rem;
             border-radius: 8px;
 
-            .label{
+            .label {
                 font-size: 1.5rem;
                 font-weight: 700;
             }

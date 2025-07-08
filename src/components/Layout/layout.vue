@@ -33,10 +33,12 @@ onMounted(() => {
     gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin);
 
     smoother.value = ScrollSmoother.create({
+        wrapper: "#smooth-wrapper",
+        content: "#smooth-content",
         smooth: 2,
         smoothTouch: 0.1,
-        effects: true,
-    })
+        effects: true
+    });
 })
 
 function handleJump(id) {
@@ -79,6 +81,17 @@ function handleJump(id) {
 </template>
 
 <style lang='less' scoped>
+@media (max-width: 768px) {
+    .sider {
+        display: none;
+    }
+
+    .content {
+        width: 100vw !important;
+        margin-left: 0 !important;
+    }
+}
+
 .sider {
     position: fixed;
     height: 100vh;

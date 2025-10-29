@@ -108,7 +108,7 @@ function prev() {
                     </template>
                     <n-step v-for="(step, index) in steps" :title="step.title">
                         <div class="n-step-description">
-                            <n-ellipsis :line-clamp="3" style="margin: 0 0 4px 0">
+                            <n-ellipsis :line-clamp="2" style="margin: 0 0 4px 0">
                                 {{ step.description }}
                                 <template #tooltip>
                                     <div style="max-width: 300px;">
@@ -143,7 +143,6 @@ function prev() {
                         </template>
                     </n-button>
                 </n-flex>
-
             </n-flex>
         </div>
     </div>

@@ -156,8 +156,10 @@ function onScroll() {
             :style="{ height: '90vh', width: '840px', maxWidth: '90vw' }" size="huge" :bordered="false">
             <template #header>
                 <div class="modal-header">
-                    <b v-if="essays[currentEssayIndex].prompt">{{ essays[currentEssayIndex].prompt }}</b>
-                    <b v-else>{{ essays[currentEssayIndex].title }}</b>
+                    <n-ellipsis :ling-clamp="1">
+                        <b v-if="essays[currentEssayIndex].prompt">{{ essays[currentEssayIndex].prompt }}</b>
+                        <b v-else>{{ essays[currentEssayIndex].title }}</b>
+                    </n-ellipsis>
                 </div>
                 <n-text class="essay-date" :depth="3">{{ essays[currentEssayIndex].date }}</n-text>
             </template>

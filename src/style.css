@@ -38,3 +38,14 @@
 .v-leave-to {
   opacity: 0;
 }
+
+table {
+  border: 1px #f3f3f3 solid;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  border: 1px #f3f3f3 solid;
+  padding: 8px;
+}

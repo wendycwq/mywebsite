@@ -49,7 +49,7 @@ function handleJump(id) {
 <template>
     <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme">
         <n-layout has-sider>
-            <n-layout-sider bordered class="sider" :width="'5rem'">
+            <n-layout-sider bordered class="sider desktop-only" :width="'5rem'">
                 <div class="logo" @click="handleJump('#home')">
                     <n-avatar round style="background-color: #346a60">W</n-avatar>
                 </div>
@@ -66,6 +66,28 @@ function handleJump(id) {
                 </div>
             </n-layout-sider>
             <n-layout id="smooth-content" style="position: relative;">
+                <div class="mobile-header mobile-only">
+                    <n-flex :justify="'space-between'" :align="'center'">
+                        <n-flex class="mobile-logo" :align="'center'" @click="handleJump('#home')">
+                            <n-avatar round style="background: var(--primary-color)">W</n-avatar>
+                        </n-flex>
+                        <n-button @click="showDrawer = true" text>
+                            <template #icon>
+                                <n-icon size="28">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        viewBox="0 0 512 512">
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-miterlimit="10" stroke-width="48" d="M88 152h336"></path>
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-miterlimit="10" stroke-width="48" d="M88 256h336"></path>
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-miterlimit="10" stroke-width="48" d="M88 360h336"></path>
+                                    </svg>
+                                </n-icon>
+                            </template>
+                        </n-button>
+                    </n-flex>
+                </div>
                 <n-layout-content class="content">
                     <home-vue id="home" @get-jump-id="handleJump"></home-vue>
                     <about-vue id="about" @get-jump-id="handleJump"></about-vue>
@@ -81,17 +103,6 @@ function handleJump(id) {
 </template>
 
 <style lang='less' scoped>
-@media (max-width: 768px) {
-    .sider {
-        display: none;
-    }
-
-    .content {
-        width: 100vw !important;
-        margin-left: 0 !important;
-    }
-}
-
 .sider {
     position: fixed;
     height: 100vh;
@@ -131,6 +142,47 @@ function handleJump(id) {
 
     .n-avatar {
         font-family: "Cherry Bomb One", system-ui;
+    }
+}
+
+/* 桌面端显示 sider，隐藏 mobile-header */
+.desktop-only {
+    display: block;
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* 移动端隐藏 sider，显示 mobile-header */
+@media (max-width: 768px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: block;
+    }
+
+    .mobile-header {
+        padding: 1rem;
+    }
+
+    .mobile-logo {
+        font-size: 2rem;
+        font-weight: bold;
+        font-family: "Cherry Bomb One", sans-serif;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+
+    .content {
+        width: 100vw;
+        margin-left: 0;
     }
 }
 </style>

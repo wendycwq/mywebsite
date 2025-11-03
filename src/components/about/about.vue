@@ -7,6 +7,9 @@ import {
     ScrollTrigger
 } from 'gsap/all';
 import { onMounted } from 'vue';
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const emits = defineEmits(["getJumpId"]);
 
@@ -41,14 +44,14 @@ function handleJump(id) {
                 <div class="subtitle">My Info</div>
                 <div class="title">About me</div>
             </div>
-            <n-grid :x-gap="48" style="align-items: center;">
-                <n-gi :span="12">
+            <n-grid :x-gap="isMobile ? 0 : 48" style="align-items: center;">
+                <n-gi :span="isMobile ? 24 : 12">
                     <div class="photo-container">
                         <img src="/wendy/Wendy-Portrait-raw.png" />
                     </div>
                 </n-gi>
-                <n-gi :span=12>
-                    <n-flex :size="32" vertical>
+                <n-gi :span="isMobile ? 24 : 12">
+                    <n-flex :size="isMobile ? 12 : 32" vertical>
                         <div id="hello" style="font-size: 1.5rem; font-weight: 600;">Hi, I am Wenqi Chen, based in
                             Beijing, China.
                         </div>
@@ -59,8 +62,8 @@ function handleJump(id) {
                             Year 6 and am now the Secretary-General of my school’s MUN club. In my free time, I play
                             piano and tennis.
                         </div>
-                        <n-grid :x-gap="12">
-                            <n-gi id="skill1" :span="8" class="skill-block">
+                        <n-grid :x-gap="12" :y-gap="16">
+                            <n-gi id="skill1" :span="isMobile ? 24 : 8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="32" color="#428478FF">
@@ -76,7 +79,7 @@ function handleJump(id) {
                                     <div class="time">Since 2014</div>
                                 </n-flex>
                             </n-gi>
-                            <n-gi id="skill2" :span="8" class="skill-block">
+                            <n-gi id="skill2" :span="isMobile ? 24 : 8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="32" color="#428478FF">
@@ -95,7 +98,7 @@ function handleJump(id) {
                                     <div class="time">Since 2016</div>
                                 </n-flex>
                             </n-gi>
-                            <n-gi id="skill3" :span="8" class="skill-block">
+                            <n-gi id="skill3" :span="isMobile ? 24 : 8" class="skill-block">
                                 <n-flex vertical>
                                     <div class="icon">
                                         <n-icon :size="28" color="#428478FF">
@@ -112,7 +115,7 @@ function handleJump(id) {
                                 </n-flex>
                             </n-gi>
                         </n-grid>
-                        <div id="projectButton">
+                        <div id="projectButton" v-if="!isMobile">
                             <n-button type="primary" @click="handleJump('#project')"
                                 style="padding: 1.5rem; color: #fff; font-weight: 600;">
                                 Go to my Projects
@@ -178,6 +181,70 @@ function handleJump(id) {
         .time {
             text-align: center;
             font-size: 1.1rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        height: 100%;
+        font-family: "Poppins", sans-serif;
+        background-color: hsl(242, 19%, 5%);
+        padding: 1rem;
+
+        .container-inner {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        .photo-container {
+            img {
+                width: 100%;
+                border-radius: 8px;
+            }
+        }
+
+        #hello {
+            font-size: 1.2rem !important;
+        }
+
+        #description {
+            font-size: 0.8rem !important;
+        }
+
+        .skill-block {
+            background: rgb(19, 19, 22);
+            border-radius: 8px;
+            padding: 1rem;
+
+            .icon {
+                text-align: center;
+            }
+
+            .label {
+                text-align: center;
+                font-size: 1rem;
+                font-weight: 700;
+            }
+
+            .time {
+                text-align: center;
+                font-size: 0.8rem;
+            }
         }
     }
 }

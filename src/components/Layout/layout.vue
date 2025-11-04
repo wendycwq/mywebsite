@@ -274,14 +274,20 @@ function handleJump(id) {
 <style lang='less' scoped>
 .sider {
     position: fixed;
+    top: 0;
+    left: 0;
     height: 100vh;
+    width: 5rem;
     background-color: hsl(242, 19%, 5%);
+    z-index: 100;
 
     .nav {
-        position: fixed;
+        position: absolute;
+        top: 0;
+        left: 0;
         transform: rotate(-90deg) translateX(-100%);
         transform-origin: left top;
-        width: calc(100vh - 10rem);
+        width: 100vh;
         height: 5rem;
 
         .nav-list {
@@ -302,12 +308,16 @@ function handleJump(id) {
 }
 
 .logo {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 5rem;
     height: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    z-index: 1;
 
     .n-avatar {
         font-family: "Cherry Bomb One", system-ui;

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject, watch } from 'vue'
 import axios from 'axios';
 import { decode } from 'js-base64';
 import { useBreakpoint } from '../../assets/general';
@@ -10,6 +10,15 @@ const currentTab = ref(0);
 
 const showDetailModal = ref(false);
 
+// 通知父组件 modal/drawer 状态
+const setDrawerState = inject('setDrawerState', null);
+
+if (setDrawerState) {
+    watch(showDetailModal, (isOpen) => {
+        setDrawerState(isOpen);
+    });
+}
+
 const allTabsContent = ref([]);
 
 const readyRender = ref(false);
@@ -17,7 +26,6 @@ const readyRender = ref(false);
 onMounted(async () => {
     const buffer = await readJSON();
     allTabsContent.value = buffer.data;
-    console.log(allTabsContent.value)
     readyRender.value = true;
 })
 

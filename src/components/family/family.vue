@@ -80,34 +80,34 @@ onMounted(() => {
                     <div class="title">Introduce to my Family</div>
                 </div>
                 <div class="wall-container">
-                    <n-grid :x-gap="24">
-                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
+                    <n-grid :x-gap="isMobile ? 12 : 24">
+                        <n-gi class="photo-container" :span="isMobile ? 12 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[16]" />
                                 <n-image :src="photos[7]" />
                                 <n-image :src="photos[14]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
+                        <n-gi class="photo-container" :span="isMobile ? 12 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[1]" />
                                 <n-image :src="photos[6]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="isMobile ? 24 : 8">
+                        <n-gi class="photo-container" :span="isMobile ? 12 : 8">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[3]" />
                                 <n-image :src="photos[4]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
+                        <n-gi class="photo-container" :span="isMobile ? 12 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[5]" />
                                 <n-image :src="photos[2]" />
                                 <n-image :src="photos[11]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
+                        <n-gi class="photo-container" :span="isMobile ? 12 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[0]" />
                                 <n-image :src="photos[10]" />
@@ -194,7 +194,7 @@ onMounted(() => {
         position: relative;
         width: 100%;
         height: 100%;
-        padding: 4rem 1rem;
+        padding: 4rem 0;
 
         .container-inner {
             width: 100%;
@@ -215,13 +215,13 @@ onMounted(() => {
             color: var(--primary-color);
             font-weight: 600;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .title {
             text-align: center;
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 2rem;
         }
 
         p {
@@ -230,6 +230,8 @@ onMounted(() => {
         }
 
         .wall-container {
+            padding: 0 1rem;
+
             .n-grid {
                 align-items: center;
             }
@@ -241,13 +243,13 @@ onMounted(() => {
                     background: #fff;
                     padding: 1.2rem;
                     border-style: solid;
-                    border-width: 1rem;
+                    border-width: 0.5rem;
                     border-top-color: lighten(#000, 20%);
                     border-right-color: lighten(#000, 0%);
                     border-bottom-color: lighten(#000, 20%);
                     border-left-color: lighten(#000, 0%);
                     box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
-                    width: calc(100% - 2.4rem - 2rem);
+                    width: calc(100% - 2.4rem - 1rem);
                 }
             }
         }

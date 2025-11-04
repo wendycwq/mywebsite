@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject, watch } from 'vue'
 import axios from 'axios';
 import { decode } from 'js-base64';
 import { useBreakpoint } from '../../assets/general';
@@ -7,6 +7,15 @@ import { useBreakpoint } from '../../assets/general';
 const { isMobile } = useBreakpoint()
 
 const showEssayModal = ref(false);
+
+// 通知父组件 modal/drawer 状态
+const setDrawerState = inject('setDrawerState', null);
+
+if (setDrawerState) {
+    watch(showEssayModal, (isOpen) => {
+        setDrawerState(isOpen);
+    });
+}
 
 const essays = ref([])
 

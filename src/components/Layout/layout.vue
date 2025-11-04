@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, provide } from 'vue';
 import {
     NConfigProvider,
     darkTheme
@@ -20,6 +20,20 @@ import ModelUNVue from '../ModelUN/ModelUN.vue';
 
 const smoother = ref(null);
 
+const showDrawer = ref(false);
+
+// 控制固定 header 的显示和主题反转
+const showFixedHeader = ref(false);
+const fixedHeaderTheme = ref(null); // null 表示 light theme
+
+// 追踪是否有任何 drawer 打开（包括子组件的）
+const anyDrawerOpen = ref(false);
+
+// 提供给子组件用于通知 drawer 状态
+provide('setDrawerState', (isOpen) => {
+    anyDrawerOpen.value = isOpen;
+});
+
 const themeOverrides = {
     common: {
         "primaryColor": "#428478FF", // 这里可以自定义主题色
@@ -28,6 +42,57 @@ const themeOverrides = {
         "primaryColorSuppl": "#287E6EFF",
     },
 };
+
+const menuOptions = [
+    {
+        label: "ABOUT",
+        routerName: "#about",
+    },
+    {
+        label: "PROJECT",
+        routerName: "#project",
+    },
+    {
+        label: "EXPERIENCE",
+        routerName: "#experience",
+    },
+    {
+        label: "RESEARCH",
+        routerName: "#research",
+    },
+    {
+        label: "FAMILY",
+        routerName: "#family",
+    }
+]
+
+// 监听 drawer 状态变化
+watch([showDrawer, anyDrawerOpen], ([localDrawer, anyDrawer]) => {
+    const fixedHeader = document.querySelector('.mobile-header-fixed');
+    if (!fixedHeader) return;
+
+    const isAnyDrawerOpen = localDrawer || anyDrawer;
+
+    if (isAnyDrawerOpen) {
+        // 任何 drawer 打开时隐藏 fixed header
+        gsap.to(fixedHeader, {
+            opacity: 0,
+            duration: 0.2,
+            ease: 'power2.in',
+            onComplete: () => {
+                gsap.set(fixedHeader, { display: 'none' });
+            }
+        });
+    } else if (showFixedHeader.value) {
+        // drawer 关闭且应该显示 fixed header 时，重新显示
+        gsap.to(fixedHeader, {
+            display: 'block',
+            opacity: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+    }
+});
 
 onMounted(() => {
     gsap.registerPlugin(ScrollSmoother, ScrollTrigger, ScrollToPlugin);
@@ -39,14 +104,91 @@ onMounted(() => {
         smoothTouch: 0.1,
         effects: true
     });
+
+    // 设置固定 header 的滚动触发效果
+    const fixedHeader = document.querySelector('.mobile-header-fixed');
+
+    if (fixedHeader) {
+        // 初始状态：隐藏并设置透明度为 0
+        gsap.set(fixedHeader, { opacity: 0, display: 'none' });
+
+        // 检查初始滚动位置
+        const initialScrollY = window.scrollY || window.pageYOffset;
+        if (initialScrollY > 640) {
+            showFixedHeader.value = true;
+            fixedHeaderTheme.value = darkTheme;
+            if (!showDrawer.value && !anyDrawerOpen.value) {
+                gsap.set(fixedHeader, { display: 'block', opacity: 1 });
+            }
+        }
+
+        ScrollTrigger.create({
+            trigger: 'body',
+            start: 'top top-=640',
+            end: 'bottom bottom',
+            onEnter: () => {
+                showFixedHeader.value = true;
+                fixedHeaderTheme.value = darkTheme;
+
+                // 只在没有 drawer 打开时才显示
+                if (!showDrawer.value && !anyDrawerOpen.value) {
+                    gsap.to(fixedHeader, {
+                        display: 'block',
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: 'power2.out'
+                    });
+                }
+            },
+            onLeaveBack: () => {
+                gsap.to(fixedHeader, {
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        showFixedHeader.value = false;
+                        fixedHeaderTheme.value = null;
+                        gsap.set(fixedHeader, { display: 'none' });
+                    }
+                });
+            }
+        });
+    }
 })
 
 function handleJump(id) {
     smoother.value.scrollTo(id, true, "top");
+    showDrawer.value = false;
 }
 </script>
 
 <template>
+    <!-- 固定定位的反转主题 header - 放在最外层确保在最上面 -->
+    <n-config-provider :theme="fixedHeaderTheme">
+        <div class="mobile-header mobile-header-fixed mobile-only">
+            <n-flex :justify="'space-between'" :align="'center'">
+                <n-flex class="mobile-logo" :align="'center'" @click="handleJump('#home')">
+                    <div class="mobile-logo-content">W</div>
+                </n-flex>
+                <n-button @click="showDrawer = true" text>
+                    <template #icon>
+                        <n-icon size="28">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                viewBox="0 0 512 512">
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                    stroke-width="48" d="M88 152h336"></path>
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                    stroke-width="48" d="M88 256h336"></path>
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                    stroke-width="48" d="M88 360h336"></path>
+                            </svg>
+                        </n-icon>
+                    </template>
+                </n-button>
+            </n-flex>
+        </div>
+    </n-config-provider>
+
     <n-config-provider :theme-overrides="themeOverrides" :theme="darkTheme">
         <n-layout has-sider>
             <n-layout-sider bordered class="sider desktop-only" :width="'5rem'">
@@ -66,6 +208,7 @@ function handleJump(id) {
                 </div>
             </n-layout-sider>
             <n-layout id="smooth-content" style="position: relative;">
+                <!-- 原始 header -->
                 <div class="mobile-header mobile-only">
                     <n-flex :justify="'space-between'" :align="'center'">
                         <n-flex class="mobile-logo" :align="'center'" @click="handleJump('#home')">
@@ -99,6 +242,32 @@ function handleJump(id) {
                 </n-layout-content>
             </n-layout>
         </n-layout>
+        <n-drawer :auto-focus="false" v-model:show="showDrawer" :width="'100vw'" :height="'100vh'"
+            :placement="'bottom'">
+            <n-drawer-content>
+                <div
+                    style="height: 90vh; position: relative; display: flex; align-items: center; justify-content: center;">
+                    <n-button style="position: absolute; top: 1rem; right: 0" text @click="showDrawer = false">
+                        <template #icon>
+                            <n-icon :size="28">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    viewBox="0 0 512 512">
+                                    <path
+                                        d="M289.94 256l95-95A24 24 0 0 0 351 127l-95 95l-95-95a24 24 0 0 0-34 34l95 95l-95 95a24 24 0 1 0 34 34l95-95l95 95a24 24 0 0 0 34-34z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </n-icon>
+                        </template>
+                    </n-button>
+                    <n-flex vertical :size="48">
+                        <n-button style="font-size: 1.2rem" v-for="option in menuOptions" text
+                            @click="handleJump(option.routerName)">
+                            {{ option.label }}
+                        </n-button>
+                    </n-flex>
+                </div>
+            </n-drawer-content>
+        </n-drawer>
     </n-config-provider>
 </template>
 
@@ -168,6 +337,18 @@ function handleJump(id) {
         padding: 1rem;
     }
 
+    .mobile-header-fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: calc(100% - 2rem);
+        z-index: 9999;
+        background-color: var(--n-color);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
     .mobile-logo {
         font-size: 2rem;
         font-weight: bold;
@@ -177,6 +358,18 @@ function handleJump(id) {
 
         &:hover {
             opacity: 0.6;
+        }
+
+        .mobile-logo-content {
+            background: var(--primary-color);
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            color: #fff;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 

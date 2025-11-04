@@ -13,4 +13,8 @@ store.state.display.isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobi
 
 <style lang="less">
 @import "./style.css";
+
+.app {
+  overflow-x: hidden;
+}
 </style>

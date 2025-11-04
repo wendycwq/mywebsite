@@ -297,7 +297,7 @@ function handleJump(id) {
 }
 
 .content {
-    width: calc(100vw - 5rem);
+    width: calc(100vw - 6rem);
     margin-left: 5rem;
 }
 

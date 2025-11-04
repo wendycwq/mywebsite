@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
 import { decode } from 'js-base64';
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const showEssayModal = ref(false);
 
@@ -97,10 +100,27 @@ function onScroll() {
                             <n-flex vertical :size="24">
                                 <n-flex vertical>
                                     <div class="label">
-                                        <n-ellipsis :line-clamp="1">{{ essay.label }}</n-ellipsis>
+                                        <n-ellipsis :line-clamp="1">
+                                            {{ essay.label }}
+                                            <template #tooltip>
+                                                <div :style="{ maxWidth: '100%', width: isMobile ? '80vw' : '480px' }">
+                                                    {{ essay.label }}
+                                                </div>
+                                            </template>
+                                        </n-ellipsis>
                                     </div>
                                     <n-flex vertical :size="18">
-                                        <div class="essay-title">{{ essay.title }}</div>
+                                        <div class="essay-title">
+                                            <n-ellipsis style="min-height: 77px" :line-clamp="2">
+                                                {{ essay.title }}
+                                                <template #tooltip>
+                                                    <div
+                                                        :style="{ maxWidth: '100%', width: isMobile ? '80vw' : '480px' }">
+                                                        {{ essay.title }}
+                                                    </div>
+                                                </template>
+                                            </n-ellipsis>
+                                        </div>
                                         <div class="achievement">
                                             <n-tag type="success">{{ essay.achievement }}</n-tag>
                                         </div>
@@ -108,7 +128,8 @@ function onScroll() {
                                             <n-ellipsis :line-clamp="3">
                                                 {{ essay.description }}
                                                 <template #tooltip>
-                                                    <div style="max-width: 100%; width: 240px">
+                                                    <div
+                                                        :style="{ maxWidth: '100%', width: isMobile ? '80vw' : '480px' }">
                                                         {{ essay.description }}
                                                     </div>
                                                 </template>
@@ -153,17 +174,25 @@ function onScroll() {
             </div>
         </div>
         <n-modal :auto-focus="false" v-model:show="showEssayModal" preset="card"
-            :style="{ height: '90vh', width: '840px', maxWidth: '90vw' }" size="huge" :bordered="false">
+            :style="{ height: isMobile ? '100vh' : '90vh', width: isMobile ? '100vw' : '960px', maxWidth: isMobile ? '100vw' : '90vw' }"
+            size="huge" :bordered="false">
             <template #header>
                 <div class="modal-header">
-                    <n-ellipsis :ling-clamp="1">
+                    <n-ellipsis :line-clamp="2">
                         <b v-if="essays[currentEssayIndex].prompt">{{ essays[currentEssayIndex].prompt }}</b>
                         <b v-else>{{ essays[currentEssayIndex].title }}</b>
+                        <template #tooltip>
+                            <div :style="{ maxWidth: '100%', width: isMobile ? '80vw' : '480px' }">
+                                <b v-if="essays[currentEssayIndex].prompt">{{ essays[currentEssayIndex].prompt }}</b>
+                                <b v-else>{{ essays[currentEssayIndex].title }}</b>
+                            </div>
+                        </template>
                     </n-ellipsis>
                 </div>
                 <n-text class="essay-date" :depth="3">{{ essays[currentEssayIndex].date }}</n-text>
             </template>
-            <n-scrollbar style="max-height: calc(90vh - 90px - 4rem); padding-right: 1rem">
+            <n-scrollbar
+                :style="{ maxHeight: isMobile ? 'calc(100vh - 13rem)' : 'calc(90vh - 13rem)', paddingRight: '1rem' }">
                 <div class="essay-content" v-html="decode(essays[currentEssayIndex].content)"></div>
             </n-scrollbar>
         </n-modal>
@@ -178,6 +207,7 @@ function onScroll() {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 2rem 2rem 2rem;
 
     .container-inner {
         position: relative;
@@ -242,11 +272,11 @@ function onScroll() {
     font-size: 1rem;
 }
 
-// .modal-header,
-// .essay-date,
-// .essay-content {
-//     font-family: 'Times New Roman', Times, serif;
-// }
+.modal-header,
+.essay-date,
+.essay-content {
+    font-family: 'Times New Roman', Times, serif;
+}
 
 .essay-content {
     font-size: 1.2rem;
@@ -277,5 +307,21 @@ function onScroll() {
 .dot.active {
     opacity: 1;
     transform: scale(1.3);
+}
+
+@media (max-width: 768px) {
+    .research-container {
+        height: 100vh;
+
+        .container-inner {
+            width: 100%;
+        }
+
+        .essay-container {
+            .essay-block {
+                min-width: calc(100vw - 8rem);
+            }
+        }
+    }
 }
 </style>

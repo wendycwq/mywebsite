@@ -190,7 +190,7 @@ function handleJump(id) {
         height: 100%;
         font-family: "Poppins", sans-serif;
         background-color: hsl(242, 19%, 5%);
-        padding: 1rem;
+        padding: 4rem 1rem;
 
         .container-inner {
             width: 100%;

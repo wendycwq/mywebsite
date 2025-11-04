@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
 import { decode } from 'js-base64';
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const currentTab = ref(0);
 
@@ -39,12 +42,12 @@ function readJSON() {
                 <div class="title">Model United Nations</div>
                 <div class="tabContent">
                     <div class="tabCard">
-                        <n-grid :x-gap="48" style="align-items: center;">
-                            <n-gi :span="12">
+                        <n-grid :x-gap="isMobile ? 0 : 48" :y-gap="16" style="align-items: center;">
+                            <n-gi :span="isMobile ? 24 : 12">
                                 <img style="border-radius: 8px; width: 100%"
                                     :src="allTabsContent[currentTab].bannerUrl" />
                             </n-gi>
-                            <n-gi :span="12">
+                            <n-gi :span="isMobile ? 24 : 12">
                                 <n-flex vertcial :size="24">
                                     <div>
                                         <n-avatar v-if="currentTab == 0" src="/wendy/portfolio/MUN/MUN-Logo.png"
@@ -57,8 +60,8 @@ function readJSON() {
                                     <div class="achievement">
                                         {{ allTabsContent[currentTab].achievement }}
                                     </div>
-                                    <n-button type="primary" @click="openDetailModal" icon-placement="right"
-                                        style="color: #fff; font-weight: 600;" :size="'large'">
+                                    <n-button class="more-detail-button" type="primary" @click="openDetailModal"
+                                        icon-placement="right" style="color: #fff; font-weight: 600;" :size="'large'">
                                         More Details
                                         <template #icon>
                                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -78,13 +81,19 @@ function readJSON() {
                 </div>
             </div>
         </div>
-        <n-modal :auto-focus="false" v-model:show="showDetailModal" preset="card"
-            :style="{ height: '90vh', width: '720px', maxWidth: '90vw' }" size="huge" :bordered="false">
+        <n-modal :auto-focus="false" v-model:show="showDetailModal" preset="card" :style="{
+            height: isMobile ? '100vh' : '90vh',
+            width: '720px',
+            maxWidth: isMobile ? '100vw' : '90vw'
+        }" size="huge" :bordered="false">
             <template #header>
                 <div class="modal-header"><b>{{ allTabsContent[currentTab].label }}</b></div>
                 <n-text class="tab-date" :depth="3">{{ allTabsContent[currentTab].date }}</n-text>
             </template>
-            <n-scrollbar style="max-height: calc(90vh - 90px - 4rem); padding-right: 1rem">
+            <n-scrollbar :style="{
+                maxHeight: isMobile ? 'calc(100vh - 150px)' : 'calc(90vh - 90px - 4rem)',
+                paddingRight: '1rem'
+            }">
                 <div class="modal-container">
                     <n-flex vertical :size="32">
                         <div v-for="content in allTabsContent[currentTab].content">
@@ -160,5 +169,64 @@ function readJSON() {
 
 .tab-date {
     font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .portfolio-container {
+        height: 100%;
+        padding: 4rem 1rem;
+
+        .container-inner {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .tabContent {
+            margin-top: 3rem
+        }
+
+        .description,
+        .achievement {
+            font-size: 0.8rem;
+        }
+    }
+
+    .modal-container,
+    .modal-header,
+    .tab-date {
+        font-family: "Poppins", sans-serif;
+        font-size: 0.8rem;
+
+        :deep(img) {
+            width: 100%;
+            object-fit: contain !important
+        }
+    }
+
+    .modal-header {
+        font-size: 1.5rem;
+    }
+
+    .tab-date {
+        font-size: 1rem;
+    }
+
+    .more-detail-button {
+        width: 100%;
+    }
 }
 </style>

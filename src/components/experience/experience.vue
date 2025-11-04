@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue'
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const current = ref(1);
 
@@ -93,7 +96,27 @@ function prev() {
             <div class="subtitle">My Experience</div>
             <div class="title">Summer School</div>
             <n-flex class="timeline-container" vertical :size="48">
-                <n-steps v-model:current="current">
+                <div v-if="isMobile">
+                    <n-flex vertical :size="24">
+                        <n-flex :align="'center'" :wrap="false">
+                            <n-avatar round style="background: var(--primary-color)">{{ current }}</n-avatar>
+                            <n-flex>
+                                <div style="font-size: 1.2rem">{{ steps[current - 1].title }}</div>
+                            </n-flex>
+                        </n-flex>
+                        <n-ellipsis :line-clamp="4" style="margin: 0 0 4px 0">
+                            {{ steps[current - 1].description }}
+                            <template #tooltip>
+                                <div style="max-width: 400px;">{{ steps[current - 1].description }}</div>
+                            </template>
+                        </n-ellipsis>
+                        <n-carousel>
+                            <n-image v-for="url in steps[current - 1].imgList" class="carousel-img"
+                                :src="url"></n-image>
+                        </n-carousel>
+                    </n-flex>
+                </div>
+                <n-steps v-else v-model:current="current">
                     <template #finish-icon>
                         <n-icon>
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -185,6 +208,47 @@ function prev() {
             width: 100%;
             aspect-ratio: 4/3;
             object-fit: cover !important
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .experience-container {
+        height: 100%;
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+        background-color: hsl(242, 19%, 5%);
+        padding: 1rem;
+
+        .container-inner {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 2.5rem;
+        }
+
+        .timeline-container {
+            margin: 3rem 0
+        }
+
+        .carousel-img {
+            :deep(img) {
+                width: 100%;
+                aspect-ratio: 4/3;
+                object-fit: cover !important
+            }
         }
     }
 }

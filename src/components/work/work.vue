@@ -2,6 +2,9 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios';
 import { decode } from 'js-base64';
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const currentTab = ref(0);
 
@@ -48,7 +51,7 @@ function readJSON() {
                     </n-flex>
                 </div> -->
                 <div class="tabContent">
-                    <n-grid :cols="3" :x-gap="48">
+                    <n-grid :cols="isMobile ? 1 : 3" :x-gap="isMobile ? 0 : 48" :y-gap="16">
                         <n-gi class="tabCard" v-for="(content, index) in allTabsContent.concat().splice(1, 3)">
                             <n-flex vertcial :size="24">
                                 <div class="label">{{ content.label }}</div>
@@ -194,5 +197,64 @@ function readJSON() {
 
 .tab-date {
     font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .portfolio-container {
+        height: 100%;
+        padding: 4rem 1rem;
+
+        .container-inner {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+
+        .tabContent {
+            margin-top: 3rem
+        }
+
+        .description,
+        .achievement {
+            font-size: 0.8rem;
+        }
+    }
+
+    .modal-container,
+    .modal-header,
+    .tab-date {
+        font-family: "Poppins", sans-serif;
+        font-size: 0.8rem;
+
+        :deep(img) {
+            width: 100%;
+            object-fit: contain !important
+        }
+    }
+
+    .modal-header {
+        font-size: 1.5rem;
+    }
+
+    .tab-date {
+        font-size: 1rem;
+    }
+
+    .more-detail-button {
+        width: 100%;
+    }
 }
 </style>

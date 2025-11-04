@@ -5,6 +5,9 @@ import {
     Physics2DPlugin,
     // …other plugins
 } from 'gsap/all';
+import { useBreakpoint } from '../../assets/general';
+
+const { isMobile } = useBreakpoint()
 
 const wrapper = ref(null);
 
@@ -78,33 +81,33 @@ onMounted(() => {
                 </div>
                 <div class="wall-container">
                     <n-grid :x-gap="24">
-                        <n-gi class="photo-container" :span="4">
+                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[16]" />
                                 <n-image :src="photos[7]" />
                                 <n-image :src="photos[14]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="4">
+                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[1]" />
                                 <n-image :src="photos[6]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="8">
+                        <n-gi class="photo-container" :span="isMobile ? 24 : 8">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[3]" />
                                 <n-image :src="photos[4]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="4">
+                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[5]" />
                                 <n-image :src="photos[2]" />
                                 <n-image :src="photos[11]" />
                             </n-flex>
                         </n-gi>
-                        <n-gi class="photo-container" :span="4">
+                        <n-gi class="photo-container" :span="isMobile ? 24 : 4">
                             <n-flex class="photo" vertical :size="24">
                                 <n-image :src="photos[0]" />
                                 <n-image :src="photos[10]" />
@@ -181,6 +184,71 @@ onMounted(() => {
                 border-left-color: lighten(#000, 0%);
                 box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
                 width: calc(100% - 2.4rem - 2rem);
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .explosion-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 4rem 1rem;
+
+        .container-inner {
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .tags {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            max-width: 120px;
+            max-height: 120px;
+            opacity: 0;
+        }
+
+        .subtitle {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 3rem;
+        }
+
+        p {
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .wall-container {
+            .n-grid {
+                align-items: center;
+            }
+
+            .photo {
+                width: 100%;
+
+                :deep(img) {
+                    background: #fff;
+                    padding: 1.2rem;
+                    border-style: solid;
+                    border-width: 1rem;
+                    border-top-color: lighten(#000, 20%);
+                    border-right-color: lighten(#000, 0%);
+                    border-bottom-color: lighten(#000, 20%);
+                    border-left-color: lighten(#000, 0%);
+                    box-shadow: 2px 2px 4px rgba(0, 0, 0, .6);
+                    width: calc(100% - 2.4rem - 2rem);
+                }
             }
         }
     }
